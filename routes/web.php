@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StaffController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +32,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+//admin
+Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+
+//staff
+Route::get('/staff/dashboard', [StaffController::class, 'staffDashboard'])->name('staff.dashboard');
