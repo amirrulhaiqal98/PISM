@@ -45,3 +45,5 @@ Route::middleware(['auth','role:staff'])->group(function(){
     Route::get('/staff/dashboard', [StaffController::class, 'staffDashboard'])->name('staff.dashboard');
 
 }); //END Group Staff Middleware 
+
+Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
