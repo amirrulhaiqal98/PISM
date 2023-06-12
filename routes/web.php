@@ -56,6 +56,9 @@ Route::middleware(['auth','role:staff'])->group(function(){
 
     Route::get('/staff/dashboard', [StaffController::class, 'staffDashboard'])->name('staff.dashboard');
 
+    Route::get('/staff/profile', [StaffController::class, 'StaffProfile'])->name('staff.profile');
+
+
 }); //END Group Staff Middleware 
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
