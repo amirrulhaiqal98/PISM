@@ -1,5 +1,5 @@
-@extends('admin.admin_dashboard')
-@section('admin')
+@extends('staff.staff_dashboard')
+@section('staff')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
 
@@ -55,7 +55,7 @@
                 <div class="card">
                     <div class="card-body">
       
-                        <h6 class="card-title">Update Admin Profile</h6>
+                        <h6 class="card-title">Update Staff Profile</h6>
 
                         <form method="POST" action="{{route('admin.profile.store')}}" class="forms-sample" enctype="multipart/form-data">
                           @csrf

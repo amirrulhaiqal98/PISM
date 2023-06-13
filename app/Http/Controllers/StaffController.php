@@ -20,4 +20,15 @@ class StaffController extends Controller
 
         return view('staff.staff_profile_view',compact('profileData'));
     }
+
+    public function StaffLogout(Request $request)
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/admin/login');
+    }
 }

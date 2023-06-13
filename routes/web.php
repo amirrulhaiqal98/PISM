@@ -58,6 +58,9 @@ Route::middleware(['auth','role:staff'])->group(function(){
 
     Route::get('/staff/profile', [StaffController::class, 'StaffProfile'])->name('staff.profile');
 
+    Route::get('/staff/logout', [StaffController::class, 'StaffLogout'])->name('staff.logout');
+
+
 
 }); //END Group Staff Middleware 
 
