@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\Backend\ClubTypeController;
 
 
 /*
@@ -65,3 +66,21 @@ Route::middleware(['auth','role:staff'])->group(function(){
 }); //END Group Staff Middleware 
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+
+
+//admin group middleware (group routing)
+Route::middleware(['auth','role:admin'])->group(function(){
+
+    //all type of club routes 
+    Route::controller(ClubTypeController::class)->group(function(){
+        
+        Route::get('/all/type','AllType')->name('all.type');
+        Route::get('/add/type','AddType')->name('add.type');
+        Route::post('/store/type','StoreType')->name('store.type');
+        Route::get('/edit/type/{id}','EditType')->name('edit.type');
+        Route::post('/update/type','UpdateType')->name('update.type');
+
+    });
+
+
+}); //END Group Admin Middleware    
