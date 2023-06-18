@@ -66,4 +66,18 @@ class ClubTypeController extends Controller
 
         return redirect()->route('all.type')->with($notification);
     }//end method
+
+    public function DeleteType($id){
+
+        ClubType::findOrFail($id)->delete();
+        
+        
+        $notification = array(
+            'message'    => 'Club Type Deleted Succesfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+        }//end method
+
 }
