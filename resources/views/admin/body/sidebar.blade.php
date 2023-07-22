@@ -64,24 +64,24 @@
             </ul>
           </div>
         </li>
+
+        <li class="nav-item nav-category">Role & Permission</li>
         <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#advancedUI" role="button" aria-expanded="false" aria-controls="advancedUI">
             <i class="link-icon" data-feather="anchor"></i>
-            <span class="link-title">Advanced UI</span>
+            <span class="link-title">Role & Permission</span>
             <i class="link-arrow" data-feather="chevron-down"></i>
           </a>
           <div class="collapse" id="advancedUI">
             <ul class="nav sub-menu">
               <li class="nav-item">
-                <a href="pages/advanced-ui/cropper.html" class="nav-link">Cropper</a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/advanced-ui/owl-carousel.html" class="nav-link">Owl carousel</a>
+                <a href="{{route('all.permission')}}" class="nav-link">All Permission</a>
               </li>
             </ul>
           </div>
         </li>
-      
+
+     
         <li class="nav-item nav-category">Docs</li>
         <li class="nav-item">
           <a href="#" target="_blank" class="nav-link">
@@ -93,7 +93,7 @@
     </div>
   </nav>
 
-  <nav class="settings-sidebar">
+  {{-- <nav class="settings-sidebar">
     <div class="sidebar-body">
       <a href="#" class="settings-sidebar-toggler">
         <i data-feather="settings"></i>
@@ -109,4 +109,4 @@
         </a>
       </div>
     </div>
-  </nav>
+  </nav> --}}

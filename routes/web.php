@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Backend\ClubTypeController;
+use App\Http\Controllers\Backend\RoleController;
 
 
 /*
@@ -82,6 +83,18 @@ Route::middleware(['auth','role:admin'])->group(function(){
         Route::get('/delete/type/{id}','DeleteType')->name('delete.type');
 
     });
+
+ //Permission All Route
+ Route::controller(RoleController::class)->group(function(){
+        
+    Route::get('/all/permission','AllPermission')->name('all.permission');
+    Route::get('/add/permission','AddPermission')->name('add.permission');
+    Route::post('/store/permission','StorePermission')->name('store.permission');
+    Route::get('/edit/permission/{id}','EditPermission')->name('edit.permission');
+    Route::post('/update/permission','UpdatePermission')->name('update.permission');
+    Route::get('/delete/permission/{id}','DeletePermission')->name('delete.permission');
+
+});
 
 
 }); //END Group Admin Middleware    
