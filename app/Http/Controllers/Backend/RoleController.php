@@ -165,7 +165,6 @@ class RoleController extends Controller
             $data['role_id']= $request->role_id;
             $data['permission_id']= $item;
 
-            // var_dump(($data));die;
             DB::table('role_has_permissions')->insert($data);
 
         }// End Foreach
@@ -175,9 +174,13 @@ class RoleController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->back()->with(($notification));
+        return redirect()->route('all.roles.permission')->with(($notification));
     }//End method
 
+    public function AllRolesPermission(){
 
+        $roles = Role::all();
+        return view ('backend.pages.rolesetup.all_roles_permission',compact('roles'));
+    }// End Method
 
 }
