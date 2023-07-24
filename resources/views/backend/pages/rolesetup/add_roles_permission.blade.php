@@ -18,19 +18,19 @@
                     <div class="card-body">
                         <h6 class="card-title">Add Roles in Permission</h6>
 
-                        <form action="{{route('store.roles')}}" class="forms-sample" id="myForm" method="POST">
+                        <form id="myForm" method="POST" action="{{route('role.permission.store')}}" class="forms-sample" >
                         @csrf
 
                         <div class="form-group mb-3">
                             <label for="exampleInputEmail1" class="form-label">Roles Name</label>
                             <select name="role_id" class="form-select" id="exampleFormControlSelect1">
-                                <option selected="" disabled="">Select Group</option>
 
+                                <option selected="" disabled="">Select Group</option>
                                 @foreach ($roles as $role)
                                     <option value="{{$role->id}}">{{$role->name}}</option>
                                 @endforeach
-
                             </select>
+                            
                         </div> 
 
                         <div class="form-group mb-2">
