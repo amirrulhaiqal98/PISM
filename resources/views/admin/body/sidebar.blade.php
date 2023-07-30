@@ -109,7 +109,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="{{route('all.roles')}}" class="nav-link">Add Admin</a>
+                <a href="{{route('add.roles')}}" class="nav-link">Add Admin</a>
               </li>
 
             </ul>
