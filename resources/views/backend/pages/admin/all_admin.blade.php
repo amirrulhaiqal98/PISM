@@ -45,6 +45,12 @@
                                                 <span class="badge badge-pill bg-danger">{{$role->name}}</span>
                                             @endforeach
                                         </td>
+                                        <td>
+                                            <a href="{{route('edit.admin',$item->id)}}" class="btn btn-inverse-warning" title="Edit" > <i data-feather="edit"></i></a>
+                                        </td>
+                                        {{-- <td>
+                                            <a href="{{route('edit.admin',$item->id)}}" class="btn btn-inverse-warning" title="Edit" > <i data-feather="edit"></i></a>
+                                        </td> --}}
 
                                     </tr>
                                 @endforeach
