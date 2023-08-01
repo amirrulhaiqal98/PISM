@@ -27,12 +27,26 @@
           </a>
           <div class="collapse" id="emails">
             <ul class="nav sub-menu">
+              @if(Auth::user()->can('club.retrieve'))
               <li class="nav-item">
-                <a href="{{route('all.type')}}" class="nav-link">SEMUA KELAB</a>
+                <a href="{{route('all.type')}}" class="nav-link">ALL KELAB</a>
               </li>
+              @endif
+              @if(Auth::user()->can('club.create'))
               <li class="nav-item">
-                <a href="{{route('add.type')}}" class="nav-link">TAMBAH KELAB</a>
+                <a href="{{route('add.type')}}" class="nav-link">ADD KELAB</a>
               </li>
+              @endif
+              @if(Auth::user()->can('club.update'))
+              <li class="nav-item">
+                <a href="{{route('add.type')}}" class="nav-link">Edit KELAB</a>
+              </li>
+              @endif
+              @if(Auth::user()->can('club.delete'))
+              <li class="nav-item">
+                <a href="{{route('add.type')}}" class="nav-link">DELETE KELAB</a>
+              </li>
+              @endif
             </ul>
           </div>
         </li>
@@ -109,7 +123,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="{{route('add.roles')}}" class="nav-link">Add Admin</a>
+                <a href="{{route('add.admin')}}" class="nav-link">Add Admin</a>
               </li>
 
             </ul>
