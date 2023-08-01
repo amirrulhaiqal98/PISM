@@ -39,7 +39,7 @@
               @endif
               @if(Auth::user()->can('club.update'))
               <li class="nav-item">
-                <a href="{{route('add.type')}}" class="nav-link">Edit KELAB</a>
+                <a href="{{route('add.type')}}" class="nav-link">EDIT KELAB</a>
               </li>
               @endif
               @if(Auth::user()->can('club.delete'))

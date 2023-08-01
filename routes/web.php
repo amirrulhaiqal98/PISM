@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 //admin group middleware
-Route::middleware(['auth','role:admin'])->group(function(){
+Route::middleware(['auth','roles:admin'])->group(function(){
 
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
 
@@ -54,7 +54,7 @@ Route::middleware(['auth','role:admin'])->group(function(){
 }); //END Group Admin Middleware 
 
 //staff group middleware
-Route::middleware(['auth','role:staff'])->group(function(){
+Route::middleware(['auth','roles:staff'])->group(function(){
 
     Route::get('/staff/dashboard', [StaffController::class, 'staffDashboard'])->name('staff.dashboard');
 
@@ -70,13 +70,13 @@ Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.
 
 
 //admin group middleware (group routing)
-Route::middleware(['auth','role:admin'])->group(function(){
+Route::middleware(['auth','roles:admin'])->group(function(){
 
     //all type of club routes 
     Route::controller(ClubTypeController::class)->group(function(){
         
-        Route::get('/all/type','AllType')->name('all.type');
-        Route::get('/add/type','AddType')->name('add.type');
+        Route::get('/all/type','AllType')->name('all.type')->middleware('permission:club.retrieve');
+        Route::get('/add/type','AddType')->name('add.type')->middleware('permission:club.create');
         Route::post('/store/type','StoreType')->name('store.type');
         Route::get('/edit/type/{id}','EditType')->name('edit.type');
         Route::post('/update/type','UpdateType')->name('update.type');
