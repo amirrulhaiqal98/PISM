@@ -5,7 +5,7 @@
 
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
-<a href="{{route('add.permission')}}" class="btn btn-inverse-info"> Add Application </a>
+<a href="{{route('add.application')}}" class="btn btn-inverse-info"> Add Application </a>
         </ol>
     </nav>
 
@@ -20,9 +20,11 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Request From</th>
-                                <th>Status</th>
+                                <th>Description</th>
+                                <th>Budget</th>
+                                <th>Venue</th>
                                 <th>Created At</th>
-                                <th>Updated At</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,9 +35,11 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$item->user->name}}</td>
+                                <td>{{$item->description}}</td>
+                                <td>{{$item->budget}}</td>
+                                <td>{{$item->venue}}</td>
+                                <td>{{($item->created_at)->format('d-m-Y')}}</td>
                                 <td>{{$item->status}}</td>
-                                <td>{{$item->created_at}}</td>
-                                <td>{{$item->updated_at}}</td>
                                 {{-- <td>
                                     <a href="{{route('edit.permission',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
                                     <a href="{{route('delete.permission',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a>

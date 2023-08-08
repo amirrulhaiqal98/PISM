@@ -22,10 +22,18 @@ class ClubTypeController extends Controller
     }
     
     public function StoreType (Request $request){
-        // print_r($request);die;
+
         $request->validate([
             'type_name' =>'required|unique:club_types|max:200',
-            'type_icon' =>'required'
+            'type_icon' =>'required',
+            'club_description' =>'required|unique:club_types|max:200',
+            'club_email' =>'required',
+            'advisor_id' =>'required',
+            'advisor_email' =>'required',
+            'advisor_phone' =>'required',
+            'president_id' =>'required',
+            'secretary_id' =>'required',
+            'treasurer_id' =>'required'
                     
         ]);
 
@@ -33,6 +41,14 @@ class ClubTypeController extends Controller
             
             'type_name' => $request->type_name,
             'type_icon' => $request->type_icon,
+            'club_description' => $request->club_description,
+            'club_email' => $request->club_email,
+            'advisor_id' => $request->advisor_id,
+            'advisor_email' => $request->advisor_email,
+            'advisor_phone' => $request->advisor_phone,
+            'president_id' => $request->president_id,
+            'secretary_id' => $request->secretary_id,
+            'treasurer_id' => $request->treasurer_id,
         ]);
 
         $notification = array(
@@ -57,6 +73,14 @@ class ClubTypeController extends Controller
             
             'type_name' => $request->type_name,
             'type_icon' => $request->type_icon,
+            'club_description' => $request->club_description,
+            'club_email' => $request->club_email,
+            'advisor_id' => $request->advisor_id,
+            'advisor_email' => $request->advisor_email,
+            'advisor_phone' => $request->advisor_phone,
+            'president_id' => $request->president_id,
+            'secretary_id' => $request->secretary_id,
+            'treasurer_id' => $request->treasurer_id,
         ]);
 
         $notification = array(

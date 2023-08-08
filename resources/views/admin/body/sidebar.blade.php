@@ -144,6 +144,10 @@
                 <a href="{{route('all.application')}}" class="nav-link">All Application</a>
               </li>
 
+              <li class="nav-item">
+                <a href="{{route('add.application')}}" class="nav-link">Add Application</a>
+              </li>
+
             </ul>
           </div>
         </li>

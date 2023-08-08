@@ -135,6 +135,8 @@ Route::controller(AdminController::class)->group(function(){
     Route::controller(ApplicationController::class)->group(function(){
             
         Route::get('/all/application','AllApplication')->name('all.application');
+        Route::get('/add/application','AddApplication')->name('add.application');
+        Route::post('/store/application','StoreApplication')->name('store.application');
         // Route::get('/add/roles','AddRoles')->name('add.roles');
 
     });
