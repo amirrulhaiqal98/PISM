@@ -130,6 +130,23 @@
           </div>
         </li>
 
+        <li class="nav-item nav-category">APPLICATIONS</li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#applications" role="button" aria-expanded="false" aria-controls="applications">
+            <i class="link-icon" data-feather="anchor"></i>
+            <span class="link-title">Application</span>
+            <i class="link-arrow" data-feather="chevron-down"></i>
+          </a>
+          <div class="collapse" id="applications">
+            <ul class="nav sub-menu">
+
+              <li class="nav-item">
+                <a href="{{route('all.application')}}" class="nav-link">All Application</a>
+              </li>
+
+            </ul>
+          </div>
+        </li>
      
         <li class="nav-item nav-category">Docs</li>
         <li class="nav-item">

@@ -69,4 +69,9 @@ class User extends Authenticatable
             return $hasPermission;
         }
     }
+
+    public function approvals()
+    {
+        return $this->hasMany(Approval::class, 'user_id');
+    }
 }

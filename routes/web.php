@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Backend\ClubTypeController;
 use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\ApplicationController;
 
 
 /*
@@ -129,6 +130,14 @@ Route::controller(AdminController::class)->group(function(){
     Route::get('/delete/admin/{id}','DeleteAdmin')->name('delete.admin');
 
 });
+
+    //Applications All Route
+    Route::controller(ApplicationController::class)->group(function(){
+            
+        Route::get('/all/application','AllApplication')->name('all.application');
+        // Route::get('/add/roles','AddRoles')->name('add.roles');
+
+    });
 
 
 }); //END Group Admin Middleware    
