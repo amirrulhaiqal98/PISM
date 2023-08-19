@@ -39,7 +39,9 @@
                                 <td>{{$item->budget}}</td>
                                 <td>{{$item->venue}}</td>
                                 <td>{{($item->created_at)->format('d-m-Y')}}</td>
-                                <td>{{$item->status}}</td>
+                                <td class="@if($item->status === 'pending') badge bg-danger @endif">
+                                    {{ $item->status }}
+                                </td>
                                 {{-- <td>
                                     <a href="{{route('edit.permission',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
                                     <a href="{{route('delete.permission',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a>

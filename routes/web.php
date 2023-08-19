@@ -7,6 +7,8 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\Backend\ClubTypeController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\ApplicationController;
+use App\Http\Controllers\UserController;
+
 
 
 /*
@@ -68,6 +70,11 @@ Route::middleware(['auth','roles:staff'])->group(function(){
 }); //END Group Staff Middleware 
 
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+Route::get('/user/signup', [UserController::class, 'UserSignup'])->name('user.signup');
+Route::post('/store/user', [UserController::class, 'StoreUser'])->name('store.user');
+
+
+// Route::post('/store/user','StoreUser')->name('store.user');
 
 
 //admin group middleware (group routing)
@@ -141,5 +148,11 @@ Route::controller(AdminController::class)->group(function(){
 
     });
 
+    //Users All Route
+    // Route::controller(UserController::class)->group(function(){
+
+    //    Route::post('/store/user','StoreUser')->name('store.user');
+
+    // });
 
 }); //END Group Admin Middleware    

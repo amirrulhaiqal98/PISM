@@ -1,5 +1,8 @@
 @extends('admin.admin_dashboard')
 @section('admin')
+@php
+ use App\Models\User;
+@endphp
 
 <div class="page-content">
 				<nav class="page-breadcrumb">
@@ -19,7 +22,12 @@
                       <tr>
                         <th>S1</th>
                         <th>Type Name</th>
-                        <th>Type Icon</th>
+                        <th>Club Description</th>
+                        <th>Club Email</th>
+                        <th>Advisor Club</th>
+                        <th>President Club</th>
+                        <th>Secreatry Club</th>
+                        <th>Treasury Club</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -28,9 +36,54 @@
                         <tr>
                             <td>{{$key+1}}</td>
                             <td>{{$item->type_name}}</td>
-                            <td>{{$item->type_icon}}</td>
+                            <td>{{$item->club_description}}</td>
+                            <td>{{$item->club_email}}</td>
                             <td>
-                              @if(Auth::user()->can('club.edit'))
+                              @if ($item->advisor)
+                                  @if ($item->advisor->name)
+                                      {{ $item->advisor->name }}
+                                  @else
+                                    Advisor Name Not Available
+                                  @endif
+                              @else
+                                  Advisor Not Assigned
+                              @endif
+                            </td>
+                            <td>
+                              @if ($item->president)
+                                  @if ($item->president->name)
+                                      {{ $item->president->name }}
+                                  @else
+                                      President Name Not Available
+                                  @endif
+                              @else
+                                  President Not Assigned
+                              @endif
+                            </td>
+                            <td>
+                              @if ($item->secretary)
+                                  @if ($item->secretary->name)
+                                      {{ $item->secretary->name }}
+                                  @else
+                                      Secretary Name Not Available
+                                  @endif
+                              @else
+                                  Secretary Not Assigned
+                              @endif
+                            </td>
+                            <td>
+                              @if ($item->treasurer)
+                                  @if ($item->treasurer->name)
+                                      {{ $item->treasurer->name }}
+                                  @else
+                                      Treasurer Name Not Available
+                                  @endif
+                              @else
+                                  Treasurer Not Assigned
+                              @endif
+                            </td>
+                            <td>
+                              @if(Auth::user()->can('club.update'))
                                 <a href="{{route('edit.type',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
                                 @endif
                               @if(Auth::user()->can('club.delete'))
