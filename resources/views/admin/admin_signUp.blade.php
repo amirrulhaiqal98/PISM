@@ -93,8 +93,8 @@ License: For each use you must have a valid license purchased only from above li
                             <input type="password" name="password" class="form-control">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Role Name</label>
-                            <select name="roles" class="form-select" id="exampleFormControlSelect1">
+                            <label for="exampleInputEmail1" class="form-label">Club Name</label>
+                            <select name="club" class="form-select" id="exampleFormControlSelect1">
 
                                 <option selected="" disabled="">Select Club</option>
                                 @foreach ($clubs as $role)
