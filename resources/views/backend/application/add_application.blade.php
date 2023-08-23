@@ -36,6 +36,16 @@
                             <input type="number" name="participant" class="form-control">
                         </div>
 
+                        <div class="form-group mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Start Date</label>
+                            <input type="date" name="start_date" class="form-control">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="exampleInputEmail1" class="form-label">End Date</label>
+                            <input type="date" name="end_date" class="form-control">
+                        </div>
+
                         <button type="submit" class="btn btn-primary me-2">Save Changes</button>
                         
                         

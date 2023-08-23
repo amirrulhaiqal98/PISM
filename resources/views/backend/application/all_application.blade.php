@@ -25,6 +25,7 @@
                                 <th>Venue</th>
                                 <th>Created At</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,13 +40,13 @@
                                 <td>{{$item->budget}}</td>
                                 <td>{{$item->venue}}</td>
                                 <td>{{($item->created_at)->format('d-m-Y')}}</td>
-                                <td class="@if($item->status === 'pending') badge bg-danger @endif">
+                                <td class="@if($item->status === 'PENDING') badge bg-danger @endif">
                                     {{ $item->status }}
                                 </td>
-                                {{-- <td>
+                                <td>
                                     <a href="{{route('edit.permission',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
-                                    <a href="{{route('delete.permission',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a>
-                                </td> --}}
+                                    {{-- <a href="{{route('delete.permission',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a> --}}
+                                </td>
                             </tr> 
                             @endforeach
                         </tbody>

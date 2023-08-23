@@ -27,9 +27,11 @@ class ApplicationController extends Controller
         $app->user_id = $id;
         $app->resource_id = 1;
         $app->description = $request->desc;
-        $app->budget = $request->budget;
+        $app->budget_request = $request->budget;
         $app->venue = $request->venue;
         $app->participant = $request->participant;
+        $app->start_date = $request->start_date;
+        $app->end_date = $request->end_date;
 
         // $user->role = 'admin';
         // $user->status = 'active';
