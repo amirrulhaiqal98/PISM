@@ -145,6 +145,7 @@ Route::controller(AdminController::class)->group(function(){
         Route::get('/add/application','AddApplication')->name('add.application');
         Route::post('/store/application','StoreApplication')->name('store.application');
         Route::get('/edit/application/{id}','EditApplication')->name('edit.application');
+        Route::post('/update/application/{id}','UpdateApplication')->name('update.application');
 
         // Route::get('/add/roles','AddRoles')->name('add.roles');
 

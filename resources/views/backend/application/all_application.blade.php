@@ -37,14 +37,14 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$item->user->name}}</td>
                                 <td>{{$item->description}}</td>
-                                <td>{{$item->budget}}</td>
+                                <td>{{$item->budget_request}}</td>
                                 <td>{{$item->venue}}</td>
                                 <td>{{($item->created_at)->format('d-m-Y')}}</td>
                                 <td class="@if($item->status === 'PENDING') badge bg-danger @endif">
                                     {{ $item->status }}
                                 </td>
                                 <td>
-                                    <a href="{{route('edit.permission',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
+                                    <a href="{{route('edit.application',$item->id)}}" class="btn btn-inverse-warning">Edit</a>
                                     {{-- <a href="{{route('delete.permission',$item->id)}}" class="btn btn-inverse-danger" id="delete">Delete</a> --}}
                                 </td>
                             </tr> 

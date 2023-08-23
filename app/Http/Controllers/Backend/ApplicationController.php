@@ -44,4 +44,32 @@ class ApplicationController extends Controller
 
         return redirect()->route('all.application')->with(($notification));
     }
+
+    public function EditApplication($id){
+        
+        $approvals = Approval::findOrFail($id);
+        // print_r($approvals);die;
+        return view('backend.application.edit_application',compact('approvals'));
+    }
+
+    public function UpdateApplication (Request $request){
+    
+        $pid = $request->id;
+
+        Approval::findOrFail($pid)->update([
+            'description'       => $request->desc,
+            'budget_request'    => $request->budget_request,
+            'venue'             => $request->venue,
+            'participant'       => $request->participant,
+            'start_date'        => $request->start_date,
+            'end_date'          => $request->end_date
+        ]);
+
+        $notification = array(
+            'message'    => 'Program details Updated Succesfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.application')->with($notification);
+    }
 }
