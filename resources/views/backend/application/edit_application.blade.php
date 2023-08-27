@@ -19,7 +19,7 @@
 
                         <div class="form-group mb-3">
                             <label for="exampleInputEmail1" class="form-label">Program Description</label>
-                            <input type="text" name="desc" class="form-control" value="{{$approvals->description}}">
+                            <input id="desc" type="text" name="desc" class="form-control" value="{{$approvals->description}}">
                         </div>
 
                         <div class="form-group mb-3">
@@ -39,12 +39,12 @@
 
                         <div class="form-group mb-3">
                             <label for="exampleInputEmail1" class="form-label">Start Date</label>
-                            <input type="date" name="start_date" class="form-control" value="{{$approvals->start_date}}">
+                            <input id="start_date" type="date" name="start_date" class="form-control" value="{{$approvals->start_date}}">
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="exampleInputEmail1" class="form-label">End Date</label>
-                            <input type="date" name="end_date" class="form-control" value="{{$approvals->start_date}}">
+                            <input id="end_date" type="date" name="end_date" class="form-control" value="{{$approvals->start_date}}">
                         </div>
 
                         <button type="submit" class="btn btn-primary me-2">Save Changes</button>
@@ -56,5 +56,15 @@
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() { // akan run page habis reload
+    //cant edit program name
+    // $('#desc').attr('disabled', true)
+
+});
+
+</script>
 
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\MemberClub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,12 +28,25 @@ class ApplicationController extends Controller
         $app->user_id = $id;
         $app->resource_id = 1;
         $app->description = $request->desc;
-        $app->budget_request = $request->budget;
+        $app->budget_request = $request->budget_request;
         $app->venue = $request->venue;
         $app->participant = $request->participant;
         $app->start_date = $request->start_date;
         $app->end_date = $request->end_date;
 
+        $members = MemberClub::select('member_club.club_id', 'ct.advisor_id')
+        ->leftJoin('roles as rl', 'rl.id', '=', 'member_club.role_id')
+        ->leftJoin('club_types as ct', 'ct.id', '=', 'member_club.club_id')
+        ->where('users_id', $id)
+        ->where('rl.name', 'SETIAUSAHA KELAB')
+        ->get();
+
+        if($members[0]['club_id']){
+            $app->club_id = $members[0]['club_id'];
+        }
+        if($members[0]['advisor_id']){
+            $app->advisor_id = $members[0]['advisor_id'];
+        }
         // $user->role = 'admin';
         // $user->status = 'active';
         $app->save();
