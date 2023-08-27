@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClubType;
 use App\Models\MemberClub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,8 +13,20 @@ use App\Models\Approval;
 class ApplicationController extends Controller
 {
     public function AllApplication(){
-        
-        $applications = Approval::with('user')->get();
+
+        $id = Auth::user()->id;
+        $clubTypes = ClubType::where('advisor_id', $id)->get();
+
+        if($clubTypes){
+            $applications = Approval::with('user')
+            ->where('advisor_id', $id)
+            ->get();   
+        }else{
+            $applications = Approval::with('user')
+            ->get();
+        }
+
+
         return view ('backend.application.all_application',compact('applications'));
     }
 
