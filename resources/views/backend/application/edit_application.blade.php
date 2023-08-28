@@ -14,7 +14,7 @@
                         <h6 class="card-title">Add Application</h6>
                         <form method="POST" action="{{route('update.application',$approvals->id)}}" class="forms-sample">
                         @csrf
-
+ 
                         <input type="hidden" name="id" value="{{$approvals->id}}">
 
                         <div class="form-group mb-3">
@@ -47,6 +47,22 @@
                             <input id="end_date" type="date" name="end_date" class="form-control" value="{{$approvals->start_date}}">
                         </div>
 
+                        <div class="form-group mb-3" id="advisor_approval_label">
+                            <label for="exampleInputEmail1" class="form-label">Advisor Approval</label>
+                            <select id="advisor_approval" name="advisor_approval" class="form-select" id="exampleFormControlSelect1">
+                                {{-- <option selected="" disabled="">PENDING</option> --}}
+                                <option value="PENDING" {{$approvals->advisor_approval =='PENDING' ? 'selected' : ''}}>PENDING</option>
+                                <option value="APPROVED" {{$approvals->advisor_approval =='APPROVED' ? 'selected' : ''}}>APPROVED</option>
+                                <option value="REJECTED" {{$approvals->advisor_approval =='REJECTED' ? 'selected' : ''}}>REJECTED</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3" id="remark_label">
+                            <label for="exampleInputEmail1" class="form-label">Remark</label>
+                            <input id="remark" type="text" name="remark" class="form-control" value="{{$approvals->remark}}">
+                        </div>
+
+
                         <button type="submit" class="btn btn-primary me-2">Save Changes</button>
                     
                         </form>
@@ -58,13 +74,32 @@
 </div>
 
 <script>
+    $(document).ready(function() {
+        var isAdvisor = {!! json_encode($is_advisor) !!}; // Assuming $is_advisor is a boolean value
+        
+        console.log("isAdvisor value:", isAdvisor); // Debug statement
 
-$(document).ready(function() { // akan run page habis reload
-    //cant edit program name
-    // $('#desc').attr('disabled', true)
+        if (isAdvisor == 1) {
+            $("#advisor_approval_label").show(); // Show the label with ID "advisor_approval"
+            $("#remark_label").show(); // Show the label with ID "advisor_approval"
+        } else {
+            $("#advisor_approval_label").hide(); // Hide the label with ID "advisor_approval"
+            $("#remark_label").hide(); // Hide the label with ID "advisor_approval"
+        }
 
+    $("form").submit(function(event) {
+        var advisorApproval = $("#advisor_approval").val();
+        var remark = $("#remark").val();
+        // console.log(remark);debugger
+
+        if (advisorApproval == "REJECTED" && remark.trim() === "") {
+            event.preventDefault(); // Prevent form submission
+
+            // Display an error message or perform any desired action
+            alert("Please provide a remark for the rejected application.");
+        }
+    });
 });
-
 </script>
 
 @endsection

@@ -40,7 +40,7 @@
                                 <td>{{$item->budget_request}}</td>
                                 <td>{{$item->venue}}</td>
                                 <td>{{($item->created_at)->format('d-m-Y')}}</td>
-                                <td class="@if($item->status === 'PENDING') badge bg-danger @endif">
+                                <td class="@if($item->status === 'PENDING') badge bg-danger @elseif($item->status === 'WAITING FOR PISM DIRECTOR APPROVAL') badge bg-info @endif">
                                     {{ $item->status }}
                                 </td>
                                 <td>

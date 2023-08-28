@@ -17,13 +17,14 @@ class ApplicationController extends Controller
         $id = Auth::user()->id;
         $clubTypes = ClubType::where('advisor_id', $id)->get();
 
-        if($clubTypes){
-            $applications = Approval::with('user')
-            ->where('advisor_id', $id)
-            ->get();   
-        }else{
+        if ($clubTypes->isEmpty()) {
             $applications = Approval::with('user')
             ->get();
+        }else{
+            // print_r('masuk sini');die;
+            $applications = Approval::with('user')
+            ->where('advisor_id', $id)
+            ->get();  
         }
 
 
@@ -76,12 +77,35 @@ class ApplicationController extends Controller
         
         $approvals = Approval::findOrFail($id);
         // print_r($approvals);die;
-        return view('backend.application.edit_application',compact('approvals'));
+
+        //filter to advisor only
+        $id_advisor = Auth::user()->id;
+        $clubTypes = ClubType::where('advisor_id', $id_advisor)->get();
+
+        if($clubTypes->isNotEmpty()){
+            $is_advisor =1;
+        }else{
+            $is_advisor =0;
+        }
+
+        
+        // print_r($approvals);die;
+        return view('backend.application.edit_application',compact('approvals','is_advisor'));
     }
 
     public function UpdateApplication (Request $request){
     
         $pid = $request->id;
+        // print_r($request);die;
+        if ($request->has('advisor_approval') && !empty($request->advisor_approval)) {
+            if ($request->advisor_approval == 'APPROVED') {
+                $status = 'WAITING FOR PISM DIRECTOR APPROVAL';
+            } elseif ($request->advisor_approval == 'REJECTED') {
+                $status = 'REJECTED BY CLUB ADVISOR';
+            }else{
+                $status = 'PENDING';
+            }
+        }
 
         Approval::findOrFail($pid)->update([
             'description'       => $request->desc,
@@ -89,7 +113,10 @@ class ApplicationController extends Controller
             'venue'             => $request->venue,
             'participant'       => $request->participant,
             'start_date'        => $request->start_date,
-            'end_date'          => $request->end_date
+            'end_date'          => $request->end_date,
+            'advisor_approval'  => $request->advisor_approval,
+            'status'            => $status,
+            'remark'            => $request->remark
         ]);
 
         $notification = array(
