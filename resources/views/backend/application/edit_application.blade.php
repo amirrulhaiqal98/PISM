@@ -60,7 +60,7 @@
 
                         <div class="form-group mb-3" id="remark_label_advisor">
                             <label for="exampleInputEmail1" class="form-label">Remark</label>
-                            <input id="remark_advisor" type="text" name="remark_advisor" class="form-control" value="{{$approvals->remark}}">
+                            <input id="remark_advisor" type="text" name="remark_advisor" class="form-control" value="{{$approvals->advisor_remark}}">
                         </div>
 
                         <div class="form-group mb-3" id="director_approval_label">
@@ -75,7 +75,7 @@
 
                         <div class="form-group mb-3" id="remark_label_director">
                             <label for="exampleInputEmail1" class="form-label">Remark</label>
-                            <input id="remark_director" type="text" name="remark_director" class="form-control" value="{{$approvals->remark}}">
+                            <input id="remark_director" type="text" name="remark_director" class="form-control" value="{{$approvals->director_remark}}">
                         </div>
 
 
@@ -110,7 +110,7 @@
             $("#remark_label_advisor").show(); // Show the label with ID "advisor_approval"
             $("#remark_advisor").prop("disabled", true);
             $("#director_approval_label").show(); // Show the label with ID "director_approval"
-            $("#remark_director").val("");
+            // $("#remark_director").val("");
             $("#remark_label_director").show(); // Show the label with ID "director_approval"
         } else {
             $("#director_approval_label").hide(); // Hide the label with ID "director_approval"
@@ -155,6 +155,8 @@
     if (directorApprovalValue === "REJECTED" || directorApprovalValue === "APPROVED") {
         $("#director_approval").prop("disabled", true);
         $("#remark_advisor").prop("disabled", true);
+        $("#remark_director").prop("disabled", true);
+
     }
 });
 </script>
