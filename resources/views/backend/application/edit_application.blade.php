@@ -47,35 +47,32 @@
                             <input id="end_date" type="date" name="end_date" class="form-control" value="{{$approvals->start_date}}">
                         </div>
 
-                        <div class="form-group mb-3" id="advisor_approval_label">
+                        <div class="form-group mb-3" id="advisor_approval_label" style="display: none;">
                             <label for="exampleInputEmail1" class="form-label">Advisor Approval</label>
                             <select id="advisor_approval" name="advisor_approval" class="form-select" id="exampleFormControlSelect1">
-                                {{-- <option selected="" disabled="">PENDING</option> --}}
                                 <option selected="" disabled="">Select Status</option>
-                                {{-- <option value="PENDING" {{$approvals->advisor_approval =='PENDING' ? 'selected' : ''}}>PENDING</option> --}}
                                 <option value="APPROVED" {{$approvals->advisor_approval =='APPROVED' ? 'selected' : ''}}>APPROVED</option>
                                 <option value="REJECTED" {{$approvals->advisor_approval =='REJECTED' ? 'selected' : ''}}>REJECTED</option>
                             </select>
                         </div>
 
-                        <div class="form-group mb-3" id="remark_label_advisor">
+                        <div class="form-group mb-3" id="remark_label_advisor" style="display: none;">
                             <label for="exampleInputEmail1" class="form-label">Remark</label>
-                            <input id="remark_advisor" type="text" name="remark_advisor" class="form-control" value="{{$approvals->advisor_remark}}">
+                            <input id="advisor_remark" type="text" name="advisor_remark" class="form-control" value="{{$approvals->advisor_remark}}">
                         </div>
 
-                        <div class="form-group mb-3" id="director_approval_label">
+                        <div class="form-group mb-3" id="director_approval_label" style="display: none;">
                             <label for="exampleInputEmail1" class="form-label">Director Approval</label>
                             <select id="director_approval" name="director_approval" class="form-select" id="exampleFormControlSelect1">
-                                {{-- <option selected="" disabled="">PENDING</option> --}}
-                                <option value="PENDING" {{$approvals->director_approval =='PENDING' ? 'selected' : ''}}>PENDING</option>
+                                <option selected="" disabled="">Select Status</option>
                                 <option value="APPROVED" {{$approvals->director_approval =='APPROVED' ? 'selected' : ''}}>APPROVED</option>
                                 <option value="REJECTED" {{$approvals->director_approval =='REJECTED' ? 'selected' : ''}}>REJECTED</option>
                             </select>
                         </div>
 
-                        <div class="form-group mb-3" id="remark_label_director">
+                        <div class="form-group mb-3" id="remark_label_director"  style="display: none;">
                             <label for="exampleInputEmail1" class="form-label">Remark</label>
-                            <input id="remark_director" type="text" name="remark_director" class="form-control" value="{{$approvals->director_remark}}">
+                            <input id="director_remark" type="text" name="director_remark" class="form-control" value="{{$approvals->director_remark}}">
                         </div>
 
 
@@ -84,6 +81,26 @@
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this HTML code within your page content, preferably at the end of the file -->
+<div class="modal" id="remarkModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Remark is Required</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalButton">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Please provide a remark for the rejected application.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeButton">Close</button>
             </div>
         </div>
     </div>
@@ -108,9 +125,8 @@
         if (isDirector  == 1) {
             $("#advisor_approval_label").show(); // Show the label with ID "advisor_approval"
             $("#remark_label_advisor").show(); // Show the label with ID "advisor_approval"
-            $("#remark_advisor").prop("disabled", true);
+            $("#advisor_remark").prop("disabled", true);
             $("#director_approval_label").show(); // Show the label with ID "director_approval"
-            // $("#remark_director").val("");
             $("#remark_label_director").show(); // Show the label with ID "director_approval"
         } else {
             $("#director_approval_label").hide(); // Hide the label with ID "director_approval"
@@ -121,21 +137,26 @@
     $("form").submit(function(event) {
         var advisorApproval = $("#advisor_approval").val();
         var directorApproval = $("#director_approval").val();
-        var advisorRemark = $("#remark_advisor").val();
-        var directorRemark = $("#remark_director").val();
+        var advisorRemark = $("#advisor_remark").val();
+        var directorRemark = $("#director_remark").val();
 
-        // Enable the remark_advisor & remark_director field before form submission
-        $("#remark_advisor").prop("disabled", false);
-        $("#remark_director").prop("disabled", false);
+        // Enable the advisor_remark & director_remark field before form submission
+        $("#advisor_remark").prop("disabled", false);
+        $("#director_remark").prop("disabled", false);
         $("#advisor_approval").prop("disabled", false);
         $("#director_approval").prop("disabled", false);
 
         if ((advisorApproval == "REJECTED" && advisorRemark.trim() === "") || (directorApproval == "REJECTED" && directorRemark.trim() === "")) {
             event.preventDefault(); // Prevent form submission
+            
+            // Open the modal instead of showing an alert
+            $('#remarkModal').modal('show');
 
-            // Display an error message or perform any desired action
-            alert("Please provide a remark for the rejected application.");
+            $('#closeModalButton, #closeButton').on('click', function() {
+            $('#remarkModal').modal('hide');
+            });
         }
+
     });
 
     // Disable the advisor_approval field if the value is "REJECTED" or "APPROVED"
@@ -146,16 +167,18 @@
  
     if (advisorApprovalValue === "REJECTED" || advisorApprovalValue === "APPROVED") {
         $("#advisor_approval").prop("disabled", true);
-        $("#remark_advisor").prop("disabled", true);
+        $("#advisor_remark").prop("disabled", true);
     }else{
         $("#director_approval").prop("disabled", true);
-        $("#remark_director").prop("disabled", true);
+        $("#director_remark").prop("disabled", true);
     }
 
     if (directorApprovalValue === "REJECTED" || directorApprovalValue === "APPROVED") {
         $("#director_approval").prop("disabled", true);
-        $("#remark_advisor").prop("disabled", true);
-        $("#remark_director").prop("disabled", true);
+        $("#advisor_remark").prop("disabled", true);
+        $("#director_remark").prop("disabled", true);
+        $("#director_approval_label").show(); // Show the label with ID "director_approval"
+        $("#remark_label_director").show(); // Show the label with ID "director_approval"
 
     }
 });

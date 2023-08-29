@@ -124,7 +124,8 @@ class ApplicationController extends Controller
         $director_remark = '';
         
         // print_r($request);die;
-        if ($request->has('advisor_approval') && !empty($request->advisor_approval)) {
+        if ($request->has('advisor_approval') && !empty($request->advisor_approval) && ($request->advisor_approval =='PENDING')) {
+                print_r('masuk1');die;
             if ($request->advisor_approval == 'APPROVED') {
                 $status = 'WAITING FOR PISM DIRECTOR APPROVAL';
             } elseif ($request->advisor_approval == 'REJECTED') {
@@ -142,30 +143,34 @@ class ApplicationController extends Controller
             }
         }
 
-        // if(!empty($request->remark_director) && empty($request->remark_advisor)) {
-        if(!empty($request->remark_director) || !empty($request->director_approval)) { //if director submit approval
-            $director_remark = $request->remark_director;
-            $director_approval = $request->director_approval;
-        }else{
-            $advisor_remark = $request->remark_advisor;
-            $director_approval = '';
-            $director_remark = '';
 
+        $updateData = [
+            'description' => $request->desc,
+            'budget_request' => $request->budget_request,
+            'venue' => $request->venue,
+            'participant' => $request->participant,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'status' => $status
+        ];
+
+        if (!empty($request->advisor_approval)) {
+            $updateData['advisor_approval'] = $request->advisor_approval;
         }
 
-        Approval::findOrFail($pid)->update([
-            'description'       => $request->desc,
-            'budget_request'    => $request->budget_request,
-            'venue'             => $request->venue,
-            'participant'       => $request->participant,
-            'start_date'        => $request->start_date,
-            'end_date'          => $request->end_date,
-            'advisor_approval'  => $request->advisor_approval,
-            'status'            => $status,
-            'advisor_remark'    => $advisor_remark,
-            'director_remark'    => $director_remark,
-            'director_approval' => $director_approval
-        ]);
+        if (!empty($request->advisor_remark)) {
+            $updateData['advisor_remark'] = $request->advisor_remark;
+        }
+        
+        if (!empty($request->director_approval)) {
+            $updateData['director_approval'] = $request->director_approval;
+        }
+
+        if (!empty($request->director_remark)) {
+            $updateData['director_remark'] = $request->director_remark;
+        }
+        
+        Approval::findOrFail($pid)->update($updateData);
 
         $notification = array(
             'message'    => 'Program details Updated Succesfully!',
