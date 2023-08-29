@@ -40,7 +40,7 @@
                                 <td>{{$item->budget_request}}</td>
                                 <td>{{$item->venue}}</td>
                                 <td>{{($item->created_at)->format('d-m-Y')}}</td>
-                                <td class="@if($item->status === 'PENDING') badge bg-danger @elseif($item->status === 'WAITING FOR PISM DIRECTOR APPROVAL') badge bg-info @endif">
+                                <td class="@if($item->status === 'PENDING') badge bg-info @elseif($item->status === 'WAITING FOR PISM DIRECTOR APPROVAL') badge bg-success @elseif($item->status === 'REJECTED BY CLUB ADVISOR') badge bg-danger @elseif($item->status === 'PROGRAM APPROVED') badge bg-success @elseif($item->status === 'REJECTED BY PISM DIRECTOR') badge bg-danger @endif">
                                     {{ $item->status }}
                                 </td>
                                 <td>

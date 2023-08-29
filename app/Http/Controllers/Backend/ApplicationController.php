@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Approval;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ApplicationController extends Controller
 {
@@ -17,16 +19,26 @@ class ApplicationController extends Controller
         $id = Auth::user()->id;
         $clubTypes = ClubType::where('advisor_id', $id)->get();
 
-        if ($clubTypes->isEmpty()) {
+        // $directorPermission = DB::table('model_has_roles')
+        // ->select('model_has_roles.*', 'roles.*')
+        // ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+        // ->where('name', 'PENGARAH PISM')
+        // ->where('model_id', $id)
+        // ->get();
+        $user = User::find(1);
+        $directorPermission = $user->directorPermission($id);
+
+        if ($clubTypes->isEmpty() && $directorPermission->isEmpty()) {
             $applications = Approval::with('user')
             ->get();
-        }else{
-            // print_r('masuk sini');die;
+        }elseif($clubTypes->isNotEmpty()){ //applications for CLUB ADVISOR
             $applications = Approval::with('user')
             ->where('advisor_id', $id)
             ->get();  
+        }elseif($directorPermission->isNotEmpty()){ //applications for PISM DIRECTOR
+            $applications = Approval::where('advisor_approval', '=', 'APPROVED')
+            ->get();
         }
-
 
         return view ('backend.application.all_application',compact('applications'));
     }
@@ -80,22 +92,37 @@ class ApplicationController extends Controller
 
         //filter to advisor only
         $id_advisor = Auth::user()->id;
-        $clubTypes = ClubType::where('advisor_id', $id_advisor)->get();
+        $advisorPermission = ClubType::where('advisor_id', $id_advisor)->get();
 
-        if($clubTypes->isNotEmpty()){
+        $is_director = Auth::user()->id;
+        $user = User::find(1);
+        $directorPermission = $user->directorPermission($is_director);
+        // print_r($directorPermission);die;
+
+        if($advisorPermission->isNotEmpty() && $directorPermission->isEmpty()){
             $is_advisor =1;
+            $is_director =0;
+        }elseif($advisorPermission->isEmpty() && $directorPermission->isNotEmpty()){
+            $is_advisor =0;
+            $is_director =1;
         }else{
             $is_advisor =0;
+            $is_director =0;
         }
 
-        
         // print_r($approvals);die;
-        return view('backend.application.edit_application',compact('approvals','is_advisor'));
+        return view('backend.application.edit_application',compact('approvals','is_advisor','is_director'));
     }
 
     public function UpdateApplication (Request $request){
     
         $pid = $request->id;
+
+        // Initialize the $advisor_remark, $director_approval, and $director_remark variables
+        $advisor_remark = '';
+        $director_approval = '';
+        $director_remark = '';
+        
         // print_r($request);die;
         if ($request->has('advisor_approval') && !empty($request->advisor_approval)) {
             if ($request->advisor_approval == 'APPROVED') {
@@ -105,6 +132,25 @@ class ApplicationController extends Controller
             }else{
                 $status = 'PENDING';
             }
+        }elseif ($request->has('director_approval') && !empty($request->director_approval)) {
+            if ($request->director_approval == 'APPROVED') {
+                $status = 'PROGRAM APPROVED';
+            } elseif ($request->director_approval == 'REJECTED') {
+                $status = 'REJECTED BY PISM DIRECTOR';
+            }else{
+                $status = 'PENDING';
+            }
+        }
+
+        // if(!empty($request->remark_director) && empty($request->remark_advisor)) {
+        if(!empty($request->remark_director) || !empty($request->director_approval)) { //if director submit approval
+            $director_remark = $request->remark_director;
+            $director_approval = $request->director_approval;
+        }else{
+            $advisor_remark = $request->remark_advisor;
+            $director_approval = '';
+            $director_remark = '';
+
         }
 
         Approval::findOrFail($pid)->update([
@@ -116,7 +162,9 @@ class ApplicationController extends Controller
             'end_date'          => $request->end_date,
             'advisor_approval'  => $request->advisor_approval,
             'status'            => $status,
-            'remark'            => $request->remark
+            'advisor_remark'    => $advisor_remark,
+            'director_remark'    => $director_remark,
+            'director_approval' => $director_approval
         ]);
 
         $notification = array(

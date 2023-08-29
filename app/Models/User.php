@@ -74,4 +74,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Approval::class, 'user_id');
     }
+
+    public function directorPermission($id)
+{
+    return DB::table('model_has_roles')
+        ->select('model_has_roles.*', 'roles.*')
+        ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
+        ->where('name', 'PENGARAH PISM')
+        ->where('model_id', $id)
+        ->get();
+}
 }
