@@ -123,9 +123,9 @@ class ApplicationController extends Controller
         $director_approval = '';
         $director_remark = '';
         
-        // print_r($request);die;
-        if ($request->has('advisor_approval') && !empty($request->advisor_approval) && ($request->advisor_approval =='PENDING')) {
-                print_r('masuk1');die;
+        // print_r($request->advisor_approval);die;
+        if ($request->has('advisor_approval') && !empty($request->advisor_approval) && ($request->advisor_approval !='PENDING') && ($request->director_approval =='PENDING')) {
+                // print_r('masuk1');die;
             if ($request->advisor_approval == 'APPROVED') {
                 $status = 'WAITING FOR PISM DIRECTOR APPROVAL';
             } elseif ($request->advisor_approval == 'REJECTED') {
@@ -134,6 +134,7 @@ class ApplicationController extends Controller
                 $status = 'PENDING';
             }
         }elseif ($request->has('director_approval') && !empty($request->director_approval)) {
+            // print_r('masuk2');die;
             if ($request->director_approval == 'APPROVED') {
                 $status = 'PROGRAM APPROVED';
             } elseif ($request->director_approval == 'REJECTED') {
