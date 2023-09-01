@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClubType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
+
+
 
 class AdminController extends Controller
 {
     public function AdminDashboard(){
 
-        return view('admin.index');
+        $results = ClubType::leftJoin('approvals', 'club_types.id', '=', 'approvals.club_id')
+            ->select('club_types.type_name', DB::raw('SUM(approvals.budget_request) AS total_budget_request'))
+            ->groupBy('club_types.type_name')
+            ->get();
+        
+
+        return view('admin.index',compact('results'));
         
     }
 
