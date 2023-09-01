@@ -170,6 +170,10 @@ class ApplicationController extends Controller
         if (!empty($request->director_remark)) {
             $updateData['director_remark'] = $request->director_remark;
         }
+
+        if (!empty($request->budget_approve)) {
+            $updateData['budget_approve'] = $request->budget_approve;
+        }
         
         Approval::findOrFail($pid)->update($updateData);
 

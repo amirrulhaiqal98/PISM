@@ -27,6 +27,11 @@
                             <input type="number" name="budget_request" class="form-control" value="{{$approvals->budget_request}}">
                         </div>
 
+                        <div class="form-group mb-3" id="budget_approve" style="display: none;">
+                            <label for="exampleInputEmail1" class="form-label">Approve Budget</label>
+                            <input type="number" name="budget_approve" class="form-control" value="{{$approvals->budget_approve}}">
+                        </div>
+
                         <div class="form-group mb-3">
                             <label for="exampleInputEmail1" class="form-label">Venue</label>
                             <input type="text" name="venue" class="form-control" value="{{$approvals->venue}}">
@@ -128,9 +133,11 @@
             $("#advisor_remark").prop("disabled", true);
             $("#director_approval_label").show(); // Show the label with ID "director_approval"
             $("#remark_label_director").show(); // Show the label with ID "director_approval"
+            $("#budget_approve").show(); // Show the label with ID "director_approval"
         } else {
             $("#director_approval_label").hide(); // Hide the label with ID "director_approval"
             $("#remark_label_director").hide(); // Hide the label with ID "director_approval"
+            $("#budget_approve").hide(); // Hide the label with ID "director_approval"
         }
 
 
