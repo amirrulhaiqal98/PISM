@@ -12,7 +12,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Add Application</h6>
-                        <form method="POST" id="myform" action="{{route('store.application')}}" class="forms-sample">
+                        <form method="POST" id="myform" action="{{route('store.application')}}" class="forms-sample" enctype="multipart/form-data">
                         
                         @csrf
 
@@ -44,6 +44,11 @@
                         <div class="form-group mb-3">
                             <label for="exampleInputEmail1" class="form-label">End Date</label>
                             <input type="date" name="end_date" class="form-control">
+                        </div>
+
+                        <div class="form-group mb-3" id="file_input">
+                            <label for="exampleInputEmail1" class="form-label">File</label>
+                            <input class="form-control" type="file" name="fileToUpload" accept=".pdf,.doc,.docx">
                         </div>
 
                         <button type="submit" class="btn btn-primary me-2">Save Changes</button>

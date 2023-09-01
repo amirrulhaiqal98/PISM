@@ -117,11 +117,6 @@ class ApplicationController extends Controller
     public function UpdateApplication (Request $request){
     
         $pid = $request->id;
-
-        // Initialize the $advisor_remark, $director_approval, and $director_remark variables
-        $advisor_remark = '';
-        $director_approval = '';
-        $director_remark = '';
         
         // print_r($request->advisor_approval);die;
         if ($request->has('advisor_approval') && !empty($request->advisor_approval) && ($request->advisor_approval !='PENDING') && ($request->director_approval =='PENDING')) {
@@ -174,7 +169,33 @@ class ApplicationController extends Controller
         if (!empty($request->budget_approve)) {
             $updateData['budget_approve'] = $request->budget_approve;
         }
-        
+
+        //upload file
+        if ($request->hasFile('fileToUpload')) {
+            $file = $request->file('fileToUpload');
+            $extension = $file->getClientOriginalExtension();
+            
+            // Define the allowed file extensions
+            $allowedExtensions = ['pdf', 'docx', 'doc'];
+    
+            // Check if the uploaded file has a valid extension
+            if (in_array($extension, $allowedExtensions)) {
+                $filename = date('YmdHis') . '_' . $file->getClientOriginalName();
+
+                // Move the uploaded file to the desired folder
+                $file->move(public_path('upload/paper_works'),$filename);
+
+                // Save the file path in the 'path' column of your database table
+                $updateData['filename'] = $file->getClientOriginalName();
+                $updateData['path'] = $filename;
+                
+                // return redirect()->back()->with('success', 'File uploaded successfully.');
+            } else {
+                // Handle invalid file extension error
+                return redirect()->back()->with('error', 'Only PDF, DOCX, and DOC files are allowed.');
+            }
+        }
+                
         Approval::findOrFail($pid)->update($updateData);
 
         $notification = array(

@@ -12,7 +12,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h6 class="card-title">Add Application</h6>
-                        <form method="POST" action="{{route('update.application',$approvals->id)}}" class="forms-sample">
+                        <form method="POST" action="{{route('update.application',$approvals->id)}}" class="forms-sample" enctype="multipart/form-data">
                         @csrf
  
                         <input type="hidden" name="id" value="{{$approvals->id}}">
@@ -80,6 +80,19 @@
                             <input id="director_remark" type="text" name="director_remark" class="form-control" value="{{$approvals->director_remark}}">
                         </div>
 
+                        <div class="form-group mb-3" id="file_input">
+                            <label for="exampleInputEmail1" class="form-label">File</label>
+                            @if ($approvals->path)
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ asset('upload/paper_works/' . $approvals->path) }}" download class="btn btn-primary" style="font-size: 12px; padding: 4px 8px;">
+                                        <i class="fas fa-download me-2"></i> Download File
+                                    </a>
+                                    <span class="ms-2">{{ $approvals->filename }}</span>
+                                </div>
+                                <br>
+                            @endif
+                            <input class="form-control" type="file" name="fileToUpload" accept=".pdf,.doc,.docx">
+                        </div>
 
                         <button type="submit" class="btn btn-primary me-2">Save Changes</button>
                     
