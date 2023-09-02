@@ -94,16 +94,17 @@ License: For each use you must have a valid license purchased only from above li
                         </div>
                         <div class="form-group mb-3">
                             <label for="exampleInputEmail1" class="form-label">Club Name</label>
-                            <select name="club" class="form-select" id="exampleFormControlSelect1">
-
-                                <option selected="" disabled="">Select Club</option>
-                                @foreach ($clubs as $role)
-                                    <option value="{{$role->id}}">{{$role->type_name}}</option>
-                                @endforeach
-                            </select>
+                            @foreach ($clubs as $role)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="clubs[]" value="{{$role->id}}" id="club-{{$role->id}}">
+                                    <label class="form-check-label" for="club-{{$role->id}}">
+                                        {{$role->type_name}}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
-                      <div>
-                        <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">Sign Up</button>
+                        <div>
+                            <button type="submit" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">Sign Up</button>
                         </div>
                         <a href={{route('admin.login')}} class="d-block mt-3 text-muted">Already a user? Sign in</a>
                     </form>

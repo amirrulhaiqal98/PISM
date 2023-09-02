@@ -35,16 +35,20 @@ class UserController extends Controller
 
         $user->assignRole($memberRole->id);
 
-        // Insert into the member_club table
-        DB::table('member_club')->insert([
-        'users_id' => $user->id,
-        'club_id' => $request->club,
-        'role_id' => $memberRole->id,
-        'status' => 'active',
-        'created_at' => now(),
-        'updated_at' => now(),
-        ]);
+        // Assuming the form field name is 'clubs[]'
+        $clubIds = $request->clubs;
 
+        // Insert into the member_club table
+        foreach ($clubIds as $clubId) {
+            DB::table('member_club')->insert([
+                'users_id' => $user->id,
+                'club_id' => $clubId,
+                'role_id' => $memberRole->id,
+                'status' => 'active',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
         
         $notification = array(
             'message' => 'New User Registered Successfully',

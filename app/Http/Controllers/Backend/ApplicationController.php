@@ -28,13 +28,13 @@ class ApplicationController extends Controller
         $user = User::find(1);
         $directorPermission = $user->directorPermission($id);
 
-        if ($clubTypes->isEmpty() && $directorPermission->isEmpty()) {
+        if ($clubTypes->isEmpty() && $directorPermission->isEmpty()) { //applications for CLUB Secretary
             $applications = Approval::with('user')
-            ->get();
+            ->get('*');
         }elseif($clubTypes->isNotEmpty()){ //applications for CLUB ADVISOR
             $applications = Approval::with('user')
             ->where('advisor_id', $id)
-            ->get();  
+            ->get('*');
         }elseif($directorPermission->isNotEmpty()){ //applications for PISM DIRECTOR
             $applications = Approval::where('advisor_approval', '=', 'APPROVED')
             ->get();
