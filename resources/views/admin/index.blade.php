@@ -156,9 +156,9 @@ foreach ($res as $row) {
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline mb-2">
-              <h6 class="card-title mb-0">Monthly sales</h6>
+              <h6 class="card-title mb-0">APPROVED BUDGETS</h6>
             </div>
-            <p class="text-muted">Sales are activities related to selling or the number of goods or services sold in a given time period.</p>
+            <p class="text-muted">TOTAL APPROVED BUDGET</p>
             {{-- <div id="monthlySalesChart"></div> --}}
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
@@ -358,7 +358,7 @@ foreach ($res as $row) {
             exportEnabled: true,
             theme: "light1", // "light1", "light2", "dark1", "dark2"
             title:{
-              text: "Total Approve Budget BY Clubs"
+              text: "Total Approved Budget BY Clubs"
             },
             axisY:{
               includeZero: true

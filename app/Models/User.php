@@ -76,12 +76,22 @@ class User extends Authenticatable
     }
 
     public function directorPermission($id)
-{
+    {
     return DB::table('model_has_roles')
         ->select('model_has_roles.*', 'roles.*')
         ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
         ->where('name', 'PENGARAH PISM')
         ->where('model_id', $id)
         ->get();
-}
+    }
+
+    //get user from table Users by role
+    public function getUsersWithRole($roleName)
+    {
+        return $this->select('users.id', 'users.name')
+            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->where('roles.name', '=', $roleName)
+            ->get();
+    }
 }

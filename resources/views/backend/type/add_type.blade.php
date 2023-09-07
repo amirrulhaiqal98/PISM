@@ -55,16 +55,27 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="exampleInputUsername1" class="form-label">Advisor ID</label>
                                 <input type="text" name="advisor_id" class="form-control
                                 @error('advisor_id') is-invalid @enderror">
                                 @error('advisor_id')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
+                            </div> --}}
+                            <div class="form-group mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Advisor Name</label>
+                                <select name="advisor_id" class="form-control @error('advisor_id') is-invalid @enderror">
+                                @error('advisor_id')<span class="text-danger">{{$message}}</span>@enderror
+    
+                                    <option selected="" disabled="">Select Advisor</option>
+                                    @foreach ($advisorIds as $advisorId)
+                                        <option value="{{$advisorId->id}}">{{$advisorId->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="exampleInputUsername1" class="form-label">Advisor Email</label>
                                 <input type="email" name="advisor_email" class="form-control
                                 @error('advisor_email') is-invalid @enderror">
@@ -80,7 +91,7 @@
                                 @error('advisor_phone')
                                 <span class="text-danger">{{$message}}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <label for="exampleInputUsername1" class="form-label">President ID</label>

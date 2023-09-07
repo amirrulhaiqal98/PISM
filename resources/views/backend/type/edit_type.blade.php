@@ -18,10 +18,7 @@
 
                         <form method="POST" action="{{route('update.type')}}" class="forms-sample">
                           @csrf
-                          {{-- @php
-                              print_r($types);die;
-                          @endphp --}}
-
+        
                             <input type="hidden" name="id" value="{{$types->id}}">
                         
                             <div class="mb-3">
@@ -51,32 +48,17 @@
                               @enderror
                           </div>
 
-                          <div class="mb-3">
-                              <label for="exampleInputUsername1" class="form-label">Advisor ID</label>
-                              <input type="text" name="advisor_id" class="form-control
-                              @error('advisor_id') is-invalid @enderror" value="{{$types->advisor_id}}">
-                              @error('advisor_id')
-                              <span class="text-danger">{{$message}}</span>
-                              @enderror
-                          </div>
-
-                          <div class="mb-3">
-                              <label for="exampleInputUsername1" class="form-label">Advisor Email</label>
-                              <input type="email" name="advisor_email" class="form-control
-                              @error('advisor_email') is-invalid @enderror" value="{{$types->advisor_email}}">
-                              @error('advisor_email')
-                              <span class="text-danger">{{$message}}</span>
-                              @enderror
-                          </div>
-
-                          <div class="mb-3">
-                              <label for="exampleInputUsername1" class="form-label">Advisor Phone</label>
-                              <input type="text" name="advisor_phone" class="form-control
-                              @error('advisor_phone') is-invalid @enderror" value="{{$types->advisor_phone}}">
-                              @error('advisor_phone')
-                              <span class="text-danger">{{$message}}</span>
-                              @enderror
-                          </div>
+                          <div class="form-group mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Advisor Name</label>
+                            <select name="advisor_id" class="form-select" id="exampleFormControlSelect1">
+                                <option selected disabled>Select Advisor</option>
+                                @foreach ($advisorIds as $advisorId)
+                                    <option value="{{$advisorId->id}}" {{$types->advisor_id == $advisorId->id ? 'selected' : ''}}>
+                                        {{$advisorId->name}}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
                           <div class="mb-3">
                               <label for="exampleInputUsername1" class="form-label">President ID</label>

@@ -18,7 +18,9 @@ class ClubTypeController extends Controller
     
     public function AddType (){
         
-        return view('backend.type.add_type');
+        $userModel = new User();
+        $advisorIds = $userModel->getUsersWithRole('PENASIHAT KELAB'); 
+        return view('backend.type.add_type',compact('advisorIds'));
     }
     
     public function StoreType (Request $request){
@@ -29,13 +31,17 @@ class ClubTypeController extends Controller
             'club_description' =>'required|unique:club_types|max:200',
             'club_email' =>'required',
             'advisor_id' =>'required',
-            'advisor_email' =>'required',
-            'advisor_phone' =>'required',
+            // 'advisor_email' =>'required',
+            // 'advisor_phone' =>'required',
             'president_id' =>'required',
             'secretary_id' =>'required',
             'treasurer_id' =>'required'
                     
         ]);
+
+        $advisorDetail = User::select('name', 'email', 'phone')
+        ->where('id', $request->advisor_id)
+        ->first();
 
         ClubType::insert([
             
@@ -44,8 +50,8 @@ class ClubTypeController extends Controller
             'club_description' => $request->club_description,
             'club_email' => $request->club_email,
             'advisor_id' => $request->advisor_id,
-            'advisor_email' => $request->advisor_email,
-            'advisor_phone' => $request->advisor_phone,
+            'advisor_email' => $advisorDetail['email'] ?: null,
+            'advisor_phone' => $advisorDetail['phone'] ?: null,
             'president_id' => $request->president_id,
             'secretary_id' => $request->secretary_id,
             'treasurer_id' => $request->treasurer_id,
@@ -62,12 +68,20 @@ class ClubTypeController extends Controller
     public function EditType($id){
         
         $types = ClubType::findOrFail($id);
-        return view('backend.type.edit_type',compact('types'));
+        $userModel = new User();
+        $advisorIds = $userModel->getUsersWithRole('PENASIHAT KELAB');
+
+        $user = User::all();    
+
+        return view('backend.type.edit_type',compact('types','advisorIds','user'));
     }
 
     public function UpdateType (Request $request){
 
         $pid = $request->id;
+        $advisorDetail = User::select('name', 'email', 'phone')
+        ->where('id', $request->advisor_id)
+        ->first();
 
         ClubType::findOrFail($pid)->update([
             
@@ -76,8 +90,8 @@ class ClubTypeController extends Controller
             'club_description' => $request->club_description,
             'club_email' => $request->club_email,
             'advisor_id' => $request->advisor_id,
-            'advisor_email' => $request->advisor_email,
-            'advisor_phone' => $request->advisor_phone,
+            'advisor_email' => $advisorDetail['email'] ?: null,
+            'advisor_phone' => $advisorDetail['phone'] ?: null,
             'president_id' => $request->president_id,
             'secretary_id' => $request->secretary_id,
             'treasurer_id' => $request->treasurer_id,
