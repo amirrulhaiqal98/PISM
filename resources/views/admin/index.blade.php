@@ -1,6 +1,7 @@
 @extends('admin.admin_dashboard')
 @section('admin')
-<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+{{-- <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @php
 
@@ -8,11 +9,8 @@ $test = array();
 $count = 0;
 $res = $results->toArray();
 
-foreach ($res as $row) {
-    $test[$count]["label"] = $row["type_name"];
-    $test[$count]["y"] = $row["total_budget_request"];
-    $count++;
-}
+$labels = array_column($res, 'type_name');
+$values = array_column($res, 'total_budget_request');
 
 @endphp
 
@@ -160,7 +158,11 @@ foreach ($res as $row) {
             </div>
             <p class="text-muted">TOTAL APPROVED BUDGET</p>
             {{-- <div id="monthlySalesChart"></div> --}}
-            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            {{-- <div id="chartContainer" style="height: 370px; width: 100%;"></div> --}}
+            <div>
+              <canvas id="myChart"></canvas>
+            </div>
+            
 
           </div> 
         </div>
@@ -350,29 +352,28 @@ foreach ($res as $row) {
 
         </div>
 
-        <script>
-          window.onload = function () {
-           
-          var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            exportEnabled: true,
-            theme: "light1", // "light1", "light2", "dark1", "dark2"
-            title:{
-              text: "Total Approved Budget BY Clubs"
-            },
-            axisY:{
-              includeZero: true
-            },
-            data: [{
-              type: "column", //change type to bar, line, area, pie, etc
-              //indexLabel: "{y}", //Shows y value on all Data Points
-              indexLabelFontColor: "#5A5757",
-              indexLabelPlacement: "outside",   
-              dataPoints: <?php echo json_encode($test, JSON_NUMERIC_CHECK); ?>
-            }]
-          });
-          chart.render();
-           
-          }
+          <script>
+            const ctx = document.getElementById('myChart');
+          
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: <?php echo json_encode($labels); ?>,
+                datasets: [{
+                  label: 'Total Budget Request',
+                  data: <?php echo json_encode($values); ?>,
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
           </script>
+          
+          
 @endsection

@@ -62,29 +62,38 @@
 
                           <div class="mb-3">
                               <label for="exampleInputUsername1" class="form-label">President ID</label>
-                              <input type="text" name="president_id" class="form-control
-                              @error('president_id') is-invalid @enderror" value="{{$types->president_id}}">
-                              @error('president_id')
-                              <span class="text-danger">{{$message}}</span>
-                              @enderror
+                              <select name="president_id" class="form-select" id="exampleFormControlSelect1">
+                                <option selected disabled>Select Advisor</option>
+                                @foreach ($presidentIds as $presidentId)
+                                    <option value="{{$presidentId->id}}" {{$types->president_id == $presidentId->id ? 'selected' : ''}}>
+                                        {{$presidentId->name}}
+                                    </option>
+                                @endforeach
+                            </select>
                           </div>
 
                           <div class="mb-3">
                               <label for="exampleInputUsername1" class="form-label">Secretary ID</label>
-                              <input type="text" name="secretary_id" class="form-control
-                              @error('secretary_id') is-invalid @enderror" value="{{$types->secretary_id}}">
-                              @error('secretary_id')
-                              <span class="text-danger">{{$message}}</span>
-                              @enderror
+                              <select name="secretary_id" class="form-select" id="exampleFormControlSelect1">
+                                <option selected disabled>Select Advisor</option>
+                                @foreach ($secreataryIds as $secreataryId)
+                                    <option value="{{$secreataryId->id}}" {{$types->secretary_id == $secreataryId->id ? 'selected' : ''}}>
+                                        {{$secreataryId->name}}
+                                    </option>
+                                @endforeach
+                            </select>
                           </div>
 
                           <div class="mb-3">
                               <label for="exampleInputUsername1" class="form-label">Treasury ID</label>
-                              <input type="text" name="treasurer_id" class="form-control
-                              @error('treasurer_id') is-invalid @enderror" value="{{$types->treasurer_id}}">
-                              @error('treasurer_id')
-                              <span class="text-danger">{{$message}}</span>
-                              @enderror
+                              <select name="treasurer_id" class="form-select" id="exampleFormControlSelect1">
+                                <option selected disabled>Select Advisor</option>
+                                @foreach ($treasuryIds as $treasuryId)
+                                    <option value="{{$treasuryId->id}}" {{$types->treasurer_id == $treasuryId->id ? 'selected' : ''}}>
+                                        {{$treasuryId->name}}
+                                    </option>
+                                @endforeach
+                            </select>
                           </div>
                            
 

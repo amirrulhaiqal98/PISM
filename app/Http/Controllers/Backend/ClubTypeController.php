@@ -19,8 +19,12 @@ class ClubTypeController extends Controller
     public function AddType (){
         
         $userModel = new User();
-        $advisorIds = $userModel->getUsersWithRole('PENASIHAT KELAB'); 
-        return view('backend.type.add_type',compact('advisorIds'));
+        $advisorIds = $userModel->getUsersWithRole('PENASIHAT KELAB');
+        $presidentIds = $userModel->getUsersWithRole('PENGERUSI KELAB');
+        $secreataryIds = $userModel->getUsersWithRole('SETIAUSAHA KELAB');
+        $treasuryIds = $userModel->getUsersWithRole('BENDAHARI KELAB');
+
+        return view('backend.type.add_type',compact('advisorIds','presidentIds','secreataryIds','treasuryIds'));
     }
     
     public function StoreType (Request $request){
@@ -70,10 +74,13 @@ class ClubTypeController extends Controller
         $types = ClubType::findOrFail($id);
         $userModel = new User();
         $advisorIds = $userModel->getUsersWithRole('PENASIHAT KELAB');
+        $presidentIds = $userModel->getUsersWithRole('PENGERUSI KELAB');
+        $secreataryIds = $userModel->getUsersWithRole('SETIAUSAHA KELAB');
+        $treasuryIds = $userModel->getUsersWithRole('BENDAHARI KELAB');
 
         $user = User::all();    
 
-        return view('backend.type.edit_type',compact('types','advisorIds','user'));
+        return view('backend.type.edit_type',compact('types','advisorIds','user','presidentIds','secreataryIds','treasuryIds'));
     }
 
     public function UpdateType (Request $request){

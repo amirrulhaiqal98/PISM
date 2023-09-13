@@ -146,9 +146,12 @@ class ApplicationController extends Controller
             'venue' => $request->venue,
             'participant' => $request->participant,
             'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'status' => $status
+            'end_date' => $request->end_date
         ];
+
+        if (!empty($status)) {
+            $updateData['status'] = $status;
+        }
 
         if (!empty($request->advisor_approval)) {
             $updateData['advisor_approval'] = $request->advisor_approval;
