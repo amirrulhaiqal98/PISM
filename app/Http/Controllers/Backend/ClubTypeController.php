@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\ClubType;
+use App\Mail\PHPMailerEmail;
+use Illuminate\Support\Facades\Mail;
 
 class ClubTypeController extends Controller
 {
@@ -108,6 +110,12 @@ class ClubTypeController extends Controller
             'message'    => 'Club Type Updated Succesfully!',
             'alert-type' => 'success'
         );
+        // $name = $request->input('name');
+        // $email = $request->input('email');
+        $subject = ('CLUB UPDATE');
+        $message =('club information successfully updated');
+
+        Mail::to('amirrulhaiqal98@gmail.com')->send(new PHPMailerEmail($subject, $message));
 
         return redirect()->route('all.type')->with($notification);
     }//end method
