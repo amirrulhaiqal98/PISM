@@ -73,6 +73,10 @@ Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.
 Route::get('/user/signup', [UserController::class, 'UserSignup'])->name('user.signup');
 Route::post('/store/user', [UserController::class, 'StoreUser'])->name('store.user');
 
+Route::get('/hello', function () {return 'Hello, World!';
+});
+
+
 
 // Route::post('/store/user','StoreUser')->name('store.user');
 

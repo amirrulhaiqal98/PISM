@@ -115,7 +115,7 @@ class ClubTypeController extends Controller
         $subject = ('CLUB UPDATE');
         $message =('club information successfully updated');
 
-        Mail::to('amirrulhaiqal98@gmail.com')->send(new PHPMailerEmail($subject, $message));
+        Mail::to('tengkuyusoff19@gmail.com')->send(new PHPMailerEmail($subject, $message));
 
         return redirect()->route('all.type')->with($notification);
     }//end method
