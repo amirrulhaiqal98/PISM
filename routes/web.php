@@ -8,7 +8,7 @@ use App\Http\Controllers\Backend\ClubTypeController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\ApplicationController;
 use App\Http\Controllers\UserController;
-
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -26,6 +26,10 @@ Route::get('/', function () {
     return view('admin.admin_login');
 });
 
+Auth::routes([
+    'verify' =>true
+]);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -41,7 +45,7 @@ require __DIR__.'/auth.php';
 //admin group middleware
 Route::middleware(['auth','roles:admin,member'])->group(function(){
 
-    Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard')->middleware('verified');
 
     Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
 

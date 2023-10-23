@@ -87,6 +87,7 @@ License: For each use you must have a valid license purchased only from above li
                         </button>
                       </div>
                       <a href="{{route('user.signup')}}" class="d-block mt-3 text-muted">Not a user? Sign up</a>
+                      <a href="{{route('password.request')}}" class="d-block mt-3 text-muted">Forgot Password? Reset it</a>
                     </form>
                   </div>
                 </div>

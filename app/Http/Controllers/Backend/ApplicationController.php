@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Approval;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Mail\PHPMailerEmail;
+use Illuminate\Support\Facades\Mail;
 
 class ApplicationController extends Controller
 {
@@ -19,12 +21,6 @@ class ApplicationController extends Controller
         $id = Auth::user()->id;
         $clubTypes = ClubType::where('advisor_id', $id)->get();
 
-        // $directorPermission = DB::table('model_has_roles')
-        // ->select('model_has_roles.*', 'roles.*')
-        // ->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
-        // ->where('name', 'PENGARAH PISM')
-        // ->where('model_id', $id)
-        // ->get();
         $user = User::find(1);
         $directorPermission = $user->directorPermission($id);
 
@@ -82,6 +78,12 @@ class ApplicationController extends Controller
             'alert-type' => 'success'
         );
 
+        //sent email for notify SU & Club Advisor
+        $subject = ('NEW APPLICATION');
+        $message =('New application successfully apply');
+
+        Mail::to('amirrulhaiqal98@gmail.com')->send(new PHPMailerEmail($subject, $message));
+
         return redirect()->route('all.application')->with(($notification));
     }
 
@@ -138,7 +140,6 @@ class ApplicationController extends Controller
                 $status = 'PENDING';
             }
         }
-
 
         $updateData = [
             'description' => $request->desc,
